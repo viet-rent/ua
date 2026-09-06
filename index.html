@@ -11,14 +11,13 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <style>
-        /* === ОСНОВНІ СТИЛІ === */
+        /* === ОСНОВНІ СТИЛІ (без змін) === */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #222; height: 100vh; overflow: hidden; }
         a { text-decoration: none; color: inherit; }
         .header { position: sticky; top: 0; z-index: 1000; background: white; padding: 16px 40px; border-bottom: 1px solid #ebebeb; display: flex; justify-content: space-between; align-items: center; }
         .logo { font-size: 24px; font-weight: bold; color: #ff385c; display: flex; align-items: center; gap: 6px; }
-        .logo img { width: 28px; height: 28px; vertical-align: middle; }
-        .logo i { margin-right: 4px; }
+        .logo span { font-size: 26px; line-height: 1; }
         .header-controls { display: flex; align-items: center; gap: 20px; }
         .header-controls .city { font-size: 14px; color: #717171; }
         .header-controls .city i { margin-right: 6px; color: #ff385c; }
@@ -80,7 +79,7 @@
         .progress-bar { width: 100%; height: 4px; background: #f0f0f0; margin: 0 0 12px 0; border-radius: 2px; overflow: hidden; flex-shrink: 0; }
         .progress-bar .fill { height: 100%; background: #ff385c; width: 0%; transition: width 0.2s; }
 
-        /* === ПАГІНАЦІЯ (компактна, в один рядок) === */
+        /* === ПАГІНАЦІЯ === */
         .pagination-wrap {
             display: flex;
             justify-content: center;
@@ -280,230 +279,51 @@
 
         /* ===== МОБІЛЬНА ВЕРСІЯ ===== */
         @media (max-width: 768px) {
-            .main {
-                flex-direction: column;
-                height: 100vh;
-                overflow: hidden;
-            }
-            .list-panel {
-                width: 100%;
-                min-width: unset;
-                height: 50vh;
-                border-right: none;
-                border-bottom: 1px solid #ebebeb;
-                padding: 8px;
-                overflow: hidden;
-                display: flex;
-                flex-direction: row;
-                gap: 8px;
-                background: #fafafa;
-            }
-            .list-panel .results-count {
-                font-size: 12px;
-                padding: 0 4px 6px 4px;
-                margin-bottom: 0;
-                flex-shrink: 0;
-            }
-            .filters-panel {
-                order: 2;
-                flex: 0 0 160px;
-                margin-bottom: 0;
-                padding: 10px 8px;
-                border-radius: 12px;
-                overflow-y: auto;
-                max-height: 100%;
-                background: white;
-                border: 1px solid #ebebeb;
-                box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            }
-            .list-container-wrapper {
-                order: 1;
-                flex: 1;
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-                min-width: 0;
-            }
-            .filters-panel .filter-row {
-                flex-wrap: wrap;
-                gap: 4px;
-                margin-bottom: 6px;
-            }
-            .filters-panel .filter-row:last-child {
-                margin-bottom: 0;
-            }
-            .filters-panel .filter-label {
-                font-size: 11px;
-                min-width: 30px;
-            }
-            .filters-panel select,
-            .filters-panel input {
-                font-size: 11px;
-                padding: 3px 6px;
-                min-width: 40px;
-                flex: 1 1 auto;
-            }
-            .filters-panel .filter-price-inputs {
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-            .filters-panel .filter-price-inputs input {
-                width: 50px;
-                flex: 1;
-            }
-            .filters-panel .filter-actions {
-                flex-direction: column;
-                gap: 4px;
-                margin-top: 6px;
-            }
-            .filters-panel .btn-filter,
-            .filters-panel .btn-reset {
-                font-size: 11px;
-                padding: 4px 8px;
-                width: 100%;
-                text-align: center;
-            }
-            .list-container-wrapper .list-content {
-                flex: 1;
-                overflow-y: auto;
-                padding-right: 4px;
-            }
-            .list-container-wrapper .results-count {
-                padding: 4px 0 4px 4px;
-                font-size: 12px;
-                flex-shrink: 0;
-            }
-            .map-panel {
-                height: 50vh;
-                width: 100%;
-                flex: none;
-            }
-            .header {
-                padding: 10px 16px;
-                flex-wrap: wrap;
-                gap: 6px;
-            }
-            .header .logo {
-                font-size: 20px;
-            }
-            .header-controls .city {
-                font-size: 12px;
-            }
-            .listing-card {
-                flex-direction: row;
-                padding: 8px;
-                gap: 8px;
-                margin-bottom: 8px;
-            }
-            .listing-card .image {
-                width: 70px;
-                height: 70px;
-                flex-shrink: 0;
-            }
-            .listing-card .info .title {
-                font-size: 13px;
-            }
-            .listing-card .info .price {
-                font-size: 14px;
-            }
-            .listing-card .info .guests {
-                font-size: 11px;
-            }
-            .marker-cluster {
-                width: 40px !important;
-                height: 40px !important;
-                line-height: 40px !important;
-                font-size: 12px;
-            }
-            .marker-cluster div {
-                width: 34px !important;
-                height: 34px !important;
-                line-height: 34px !important;
-                font-size: 11px;
-            }
-            .pagination-wrap .page-btn {
-                min-width: 28px;
-                height: 28px;
-                font-size: 11px;
-                padding: 0 4px;
-            }
-            .pagination-wrap .page-btn.arrow {
-                min-width: 30px;
-                font-size: 12px;
-            }
-            .pagination-wrap .page-info {
-                font-size: 10px;
-                margin: 0 4px;
-            }
-            .chat-fab {
-                bottom: 16px;
-                right: 16px;
-                width: 56px;
-                height: 56px;
-                font-size: 26px;
-            }
-            .chat-fab .badge {
-                min-width: 22px;
-                height: 22px;
-                font-size: 11px;
-                top: -2px;
-                right: -2px;
-            }
-            .chat-toast {
-                top: 12px;
-                right: 12px;
-                left: 12px;
-                max-width: unset;
-                padding: 14px 18px;
-                font-size: 14px;
-            }
-            .chat-toast .icon {
-                width: 40px;
-                height: 40px;
-                font-size: 24px;
-            }
+            .main { flex-direction: column; height: 100vh; overflow: hidden; }
+            .list-panel { width: 100%; min-width: unset; height: 50vh; border-right: none; border-bottom: 1px solid #ebebeb; padding: 8px; overflow: hidden; display: flex; flex-direction: row; gap: 8px; background: #fafafa; }
+            .list-panel .results-count { font-size: 12px; padding: 0 4px 6px 4px; margin-bottom: 0; flex-shrink: 0; }
+            .filters-panel { order: 2; flex: 0 0 160px; margin-bottom: 0; padding: 10px 8px; border-radius: 12px; overflow-y: auto; max-height: 100%; background: white; border: 1px solid #ebebeb; }
+            .list-container-wrapper { order: 1; flex: 1; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+            .filters-panel .filter-row { flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+            .filters-panel .filter-row:last-child { margin-bottom: 0; }
+            .filters-panel .filter-label { font-size: 11px; min-width: 30px; }
+            .filters-panel select, .filters-panel input { font-size: 11px; padding: 3px 6px; min-width: 40px; flex: 1 1 auto; }
+            .filters-panel .filter-price-inputs { flex-wrap: wrap; gap: 4px; }
+            .filters-panel .filter-price-inputs input { width: 50px; flex: 1; }
+            .filters-panel .filter-actions { flex-direction: column; gap: 4px; margin-top: 6px; }
+            .filters-panel .btn-filter, .filters-panel .btn-reset { font-size: 11px; padding: 4px 8px; width: 100%; text-align: center; }
+            .list-container-wrapper .list-content { flex: 1; overflow-y: auto; padding-right: 4px; }
+            .list-container-wrapper .results-count { padding: 4px 0 4px 4px; font-size: 12px; flex-shrink: 0; }
+            .map-panel { height: 50vh; width: 100%; flex: none; }
+            .header { padding: 10px 16px; flex-wrap: wrap; gap: 6px; }
+            .header .logo { font-size: 20px; }
+            .header-controls .city { font-size: 12px; }
+            .listing-card { flex-direction: row; padding: 8px; gap: 8px; margin-bottom: 8px; }
+            .listing-card .image { width: 70px; height: 70px; }
+            .listing-card .info .title { font-size: 13px; }
+            .listing-card .info .price { font-size: 14px; }
+            .listing-card .info .guests { font-size: 11px; }
+            .marker-cluster { width: 40px !important; height: 40px !important; line-height: 40px !important; font-size: 12px; }
+            .marker-cluster div { width: 34px !important; height: 34px !important; line-height: 34px !important; font-size: 11px; }
+            .pagination-wrap .page-btn { min-width: 28px; height: 28px; font-size: 11px; padding: 0 4px; }
+            .pagination-wrap .page-btn.arrow { min-width: 30px; font-size: 12px; }
+            .pagination-wrap .page-info { font-size: 10px; margin: 0 4px; }
+            .chat-fab { bottom: 16px; right: 16px; width: 56px; height: 56px; font-size: 26px; }
+            .chat-fab .badge { min-width: 22px; height: 22px; font-size: 11px; top: -2px; right: -2px; }
+            .chat-toast { top: 12px; right: 12px; left: 12px; max-width: unset; padding: 14px 18px; font-size: 14px; }
+            .chat-toast .icon { width: 40px; height: 40px; font-size: 24px; }
         }
-
         @media (max-width: 480px) {
-            .filters-panel {
-                flex: 0 0 130px;
-                padding: 6px 4px;
-            }
-            .filters-panel .filter-label {
-                font-size: 10px;
-                min-width: 20px;
-            }
-            .filters-panel select,
-            .filters-panel input {
-                font-size: 10px;
-                padding: 2px 4px;
-            }
-            .filters-panel .filter-price-inputs input {
-                width: 40px;
-            }
-            .listing-card .image {
-                width: 60px;
-                height: 60px;
-            }
-            .listing-card .info .title {
-                font-size: 12px;
-            }
-            .listing-card .info .price {
-                font-size: 13px;
-            }
-            .listing-card .info .guests {
-                font-size: 10px;
-            }
-            .pagination-wrap .page-btn {
-                min-width: 24px;
-                height: 24px;
-                font-size: 10px;
-                padding: 0 3px;
-            }
-            .pagination-wrap .page-btn.arrow {
-                min-width: 26px;
-                font-size: 11px;
-            }
+            .filters-panel { flex: 0 0 130px; padding: 6px 4px; }
+            .filters-panel .filter-label { font-size: 10px; min-width: 20px; }
+            .filters-panel select, .filters-panel input { font-size: 10px; padding: 2px 4px; }
+            .filters-panel .filter-price-inputs input { width: 40px; }
+            .listing-card .image { width: 60px; height: 60px; }
+            .listing-card .info .title { font-size: 12px; }
+            .listing-card .info .price { font-size: 13px; }
+            .listing-card .info .guests { font-size: 10px; }
+            .pagination-wrap .page-btn { min-width: 24px; height: 24px; font-size: 10px; padding: 0 3px; }
+            .pagination-wrap .page-btn.arrow { min-width: 26px; font-size: 11px; }
         }
     </style>
 </head>
@@ -511,7 +331,7 @@
 
 <header class="header">
     <a href="/" class="logo">
-        <span style="font-size:26px; line-height:1;">🇪🇸</span> SpainRent
+        <span>🇪🇸</span> SpainRent
     </a>
     <div class="header-controls">
         <span class="city"><i class="fas fa-map-marker-alt"></i>Іспанія</span>
@@ -520,7 +340,7 @@
 
 <div class="main">
     <div class="list-panel" id="listPanel">
-        <!-- Фільтри – справа на мобільних, зверху на десктопі -->
+        <!-- Фільтри -->
         <div class="filters-panel" id="filtersPanel">
             <div class="filter-row">
                 <span class="filter-label">Сорт.</span>
@@ -533,7 +353,7 @@
             <div class="filter-row">
                 <span class="filter-label">Гості</span>
                 <select id="guestsFilter">
-                    <option value="any">Будь-яке</option>
+                    <option value="0">Будь-яке</option>
                     <option value="1">1+</option>
                     <option value="2">2+</option>
                     <option value="3">3+</option>
@@ -557,7 +377,7 @@
             </div>
         </div>
 
-        <!-- Контейнер зі списком (зліва на мобільних) -->
+        <!-- Контейнер зі списком -->
         <div class="list-container-wrapper" id="listWrapper">
             <div class="results-count" id="resultsCount">Завантаження...</div>
             <div class="list-content" id="listContainer">
@@ -579,28 +399,33 @@
 
 <script>
     (function() {
-        // === КОНФІГУРАЦІЯ (Вся Іспанія) ===
-        const SPAIN_CENTER = [40.0, -4.0]; // центр Іспанії
-        const DEFAULT_ZOOM = 6;            // щоб бачити всю країну
+        // ============================================================
+        //  КОНФІГУРАЦІЯ
+        // ============================================================
+        // ⚠️ ЗАМІНІТЬ ЦЕЙ URL НА ВАШ ВЕБ-АДРЕС GAS
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzJTBnNwPYrfUO8n94VDtvhSoxIBf6GcsBDru_-mM29VWMfOU8P4ICBmCNZxM4RbnYc/exec';
+
+        const SPAIN_CENTER = [40.0, -4.0];
+        const DEFAULT_ZOOM = 6;
         const ITEMS_PER_PAGE = 20;
 
-        // === ГЛОБАЛЬНІ ЗМІННІ ===
-        let allListings = [];
-        let filteredListings = [];
+        // ============================================================
+        //  ЗМІННІ
+        // ============================================================
         let map = null;
         let clusterGroup = null;
-        let markerMap = {};
         let currentBounds = null;
         let highlightedIndex = -1;
         let pendingHighlightIndex = -1;
         let selectedObjectIndex = -1;
         let listUpdateTimeout = null;
-        let visibleListings = [];
+        let visibleListings = [];      // масив об'єктів для поточної сторінки (з сервера)
+        let allMarkers = [];           // масив маркерів (з сервера) для побудови кластерів
         let currentPage = 1;
-        let totalPages = 1;
+        let totalItems = 0;            // загальна кількість знайдених (з сервера)
         let isDataLoaded = false;
-        let isUpdatingList = false;
 
+        // DOM елементи
         const listWrapper = document.getElementById('listWrapper');
         const listContainer = document.getElementById('listContainer');
         const resultsCount = document.getElementById('resultsCount');
@@ -613,281 +438,153 @@
         const applyBtn = document.getElementById('applyFilters');
         const resetBtn = document.getElementById('resetFilters');
 
-        function expandItem(item) {
-            if (Array.isArray(item)) {
-                return item.map(i => expandItem(i));
+        // ============================================================
+        //  ОСНОВНА ФУНКЦІЯ ЗАПИТУ ДО API
+        // ============================================================
+        async function fetchData(params) {
+            // params: { bounds, minPrice, maxPrice, guests, sort, page, perPage }
+            const url = new URL(API_URL);
+            // Передаємо параметри як query string
+            if (params.bounds) {
+                url.searchParams.set('bounds', JSON.stringify(params.bounds));
             }
-            if (item.title !== undefined) {
-                return item;
+            if (params.minPrice !== undefined && params.minPrice > 0) {
+                url.searchParams.set('minPrice', params.minPrice);
             }
-            return {
-                title: item.t || '',
-                price: item.p || 0,
-                guests: item.g || 0,
-                image: item.i || '',
-                lat: item.x || 0,
-                lng: item.y || 0,
-                url: item.u || '#',
-                city: item.c || '',
-                address: item.a || ''
-            };
+            if (params.maxPrice !== undefined && isFinite(params.maxPrice)) {
+                url.searchParams.set('maxPrice', params.maxPrice);
+            }
+            if (params.guests !== undefined && params.guests > 0) {
+                url.searchParams.set('guests', params.guests);
+            }
+            if (params.sort) {
+                url.searchParams.set('sort', params.sort);
+            }
+            if (params.page) {
+                url.searchParams.set('page', params.page);
+            }
+            if (params.perPage) {
+                url.searchParams.set('perPage', params.perPage);
+            }
+
+            try {
+                const response = await fetch(url.toString(), { cache: 'no-cache' });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                return data; // { total, items, markers }
+            } catch (err) {
+                console.error('Помилка завантаження даних:', err);
+                throw err;
+            }
         }
 
-        async function loadData() {
-            const files = ['data.json', 'listings.json'];
-            let data = null;
-            let loadedFile = null;
+        // ============================================================
+        //  ФУНКЦІЇ ДЛЯ РОБОТИ З ДАНИМИ ТА ВІДОБРАЖЕННЯМ
+        // ============================================================
+        function applyFiltersAndSort() {
+            // Отримуємо значення з фільтрів
+            const guestsVal = parseInt(guestsFilter.value) || 0;
+            const minPriceVal = parseFloat(priceMin.value) || 0;
+            const maxPriceVal = priceMax.value ? parseFloat(priceMax.value) : Infinity;
+            const sortVal = sortSelect.value || 'default';
 
-            for (const file of files) {
-                try {
-                    const response = await fetch(file);
-                    if (response.ok) {
-                        data = await response.json();
-                        loadedFile = file;
-                        break;
-                    }
-                } catch (e) { /* ігноруємо */ }
-            }
+            // Викликаємо завантаження даних з поточними параметрами карти
+            loadListingsForCurrentBounds(guestsVal, minPriceVal, maxPriceVal, sortVal);
+        }
 
-            if (data) {
-                allListings = expandItem(data);
-                filteredListings = [...allListings];
-                isDataLoaded = true;
-                initApp();
-                console.log(`Дані завантажено з ${loadedFile}`);
-            } else {
-                console.error('Помилка завантаження даних');
+        // Завантаження даних для поточних меж карти з фільтрами
+        function loadListingsForCurrentBounds(guests, minPrice, maxPrice, sort) {
+            if (!map) return;
+            const bounds = map.getBounds();
+            const boundsArray = [
+                [bounds.getSouth(), bounds.getWest()],
+                [bounds.getNorth(), bounds.getEast()]
+            ];
+
+            // Показуємо лоадер
+            listWrapper.classList.add('loading');
+
+            fetchData({
+                bounds: boundsArray,
+                minPrice: minPrice || 0,
+                maxPrice: maxPrice || Infinity,
+                guests: guests || 0,
+                sort: sort || 'default',
+                page: currentPage,
+                perPage: ITEMS_PER_PAGE
+            })
+            .then(data => {
+                totalItems = data.total || 0;
+                visibleListings = data.items || [];
+                allMarkers = data.markers || [];
+
+                // Оновлюємо результати
+                resultsCount.innerHTML = `Знайдено <strong>${totalItems}</strong> об'єктів`;
+                // Якщо список порожній
+                if (visibleListings.length === 0) {
+                    listContainer.innerHTML = `
+                        <div class="no-results">
+                            <i class="fas fa-search"></i>
+                            <p>У цій області немає об'єктів, що відповідають фільтрам.<br>Перемістіть карту або змініть фільтри.</p>
+                        </div>
+                    `;
+                } else {
+                    renderPageItems(visibleListings);
+                }
+                renderPagination(totalItems, currentPage, ITEMS_PER_PAGE);
+
+                // Будуємо кластери на карті
+                buildClusters(allMarkers);
+
+                // Скидаємо виділення
+                highlightedIndex = -1;
+                pendingHighlightIndex = -1;
+                selectedObjectIndex = -1;
+
+                listWrapper.classList.remove('loading');
+            })
+            .catch(err => {
+                console.error(err);
+                resultsCount.innerHTML = 'Помилка завантаження';
                 listContainer.innerHTML = `
                     <div class="no-results">
                         <i class="fas fa-exclamation-triangle"></i>
-                        <p>Не вдалося завантажити дані.<br>Перевірте файли <strong>data.json</strong> або <strong>listings.json</strong></p>
+                        <p>Не вдалося завантажити дані.<br>Перевірте підключення до інтернету або URL API.</p>
                     </div>
                 `;
-                resultsCount.textContent = 'Помилка завантаження';
                 listWrapper.classList.remove('loading');
-            }
+            });
         }
 
-        function initApp() {
-            if (!allListings.length) {
-                listContainer.innerHTML = `
-                    <div class="no-results">
-                        <i class="fas fa-database"></i>
-                        <p>Немає об'єктів для відображення.</p>
-                    </div>
-                `;
-                resultsCount.textContent = '0 об\'єктів';
-                listWrapper.classList.remove('loading');
-                return;
-            }
-
-            const progressBar = document.createElement('div');
-            progressBar.className = 'progress-bar';
-            progressBar.innerHTML = '<div class="fill" id="progressFill"></div>';
-            listContainer.prepend(progressBar);
-
-            initMap();
-            applyFiltersAndSort();
-
-            map.on('moveend', function() {
-                clearTimeout(listUpdateTimeout);
-                listUpdateTimeout = setTimeout(() => {
-                    currentBounds = map.getBounds();
-                    updateVisibleList();
-                    currentPage = 1;
-                    renderPage(currentPage);
-                    renderPagination();
-                    if (pendingHighlightIndex !== -1) {
-                        highlightCard(pendingHighlightIndex);
-                        pendingHighlightIndex = -1;
-                    }
-                }, 300);
-            });
-
-            map.on('zoomend', function() {
-                buildClusters();
-                if (pendingHighlightIndex !== -1) {
-                    highlightCard(pendingHighlightIndex);
-                    pendingHighlightIndex = -1;
-                }
-                if (highlightedIndex !== -1) {
-                    setTimeout(() => highlightCard(highlightedIndex), 100);
-                }
-            });
-
-            applyBtn.addEventListener('click', function() {
-                applyFiltersAndSort();
-                highlightedIndex = -1;
-                pendingHighlightIndex = -1;
-                selectedObjectIndex = -1;
-                buildClusters();
-                updateVisibleList();
-                currentPage = 1;
-                renderPage(currentPage);
-                renderPagination();
-            });
-
-            resetBtn.addEventListener('click', function() {
-                sortSelect.value = 'default';
-                guestsFilter.value = 'any';
-                priceMin.value = '';
-                priceMax.value = '';
-                applyFiltersAndSort();
-                highlightedIndex = -1;
-                pendingHighlightIndex = -1;
-                selectedObjectIndex = -1;
-                buildClusters();
-                updateVisibleList();
-                currentPage = 1;
-                renderPage(currentPage);
-                renderPagination();
-            });
-
-            sortSelect.addEventListener('change', function() {
-                applyFiltersAndSort();
-                highlightedIndex = -1;
-                pendingHighlightIndex = -1;
-                selectedObjectIndex = -1;
-                buildClusters();
-                updateVisibleList();
-                currentPage = 1;
-                renderPage(currentPage);
-                renderPagination();
-            });
-
-            guestsFilter.addEventListener('change', function() {
-                applyFiltersAndSort();
-                highlightedIndex = -1;
-                pendingHighlightIndex = -1;
-                selectedObjectIndex = -1;
-                buildClusters();
-                updateVisibleList();
-                currentPage = 1;
-                renderPage(currentPage);
-                renderPagination();
-            });
-
-            priceMin.addEventListener('keydown', function(e) { if (e.key === 'Enter') applyBtn.click(); });
-            priceMax.addEventListener('keydown', function(e) { if (e.key === 'Enter') applyBtn.click(); });
-
-            setTimeout(() => {
-                currentBounds = map.getBounds();
-                updateVisibleList();
-                currentPage = 1;
-                renderPage(currentPage);
-                renderPagination();
-                buildClusters();
-                document.getElementById('progressFill')?.style.setProperty('width', '100%');
-            }, 200);
-        }
-
-        function applyFiltersAndSort() {
-            let result = [...allListings];
-
-            const guestsVal = guestsFilter.value;
-            if (guestsVal !== 'any') {
-                const minGuests = parseInt(guestsVal);
-                result = result.filter(item => item.guests >= minGuests);
-            }
-
-            const minPrice = parseFloat(priceMin.value);
-            const maxPrice = parseFloat(priceMax.value);
-            if (!isNaN(minPrice)) {
-                result = result.filter(item => item.price >= minPrice);
-            }
-            if (!isNaN(maxPrice)) {
-                result = result.filter(item => item.price <= maxPrice);
-            }
-
-            const sortVal = sortSelect.value;
-            if (sortVal === 'price_asc') {
-                result.sort((a, b) => a.price - b.price);
-            } else if (sortVal === 'price_desc') {
-                result.sort((a, b) => b.price - a.price);
-            }
-
-            filteredListings = result;
-            resultsCount.innerHTML = `Знайдено <strong>${filteredListings.length}</strong> об'єктів`;
-        }
-
-        function updateVisibleList() {
-            if (!map || !isDataLoaded) return;
-            const bounds = map.getBounds();
-            currentBounds = bounds;
-
-            let visible = filteredListings.filter(item => {
-                const lat = parseFloat(item.lat);
-                const lng = parseFloat(item.lng);
-                if (isNaN(lat) || isNaN(lng)) return false;
-                return bounds.contains([lat, lng]);
-            });
-
-            if (selectedObjectIndex !== -1 && visible.length > 0) {
-                const selectedItem = filteredListings[selectedObjectIndex];
-                if (selectedItem) {
-                    const pos = visible.indexOf(selectedItem);
-                    if (pos !== -1) {
-                        visible.splice(pos, 1);
-                        visible.unshift(selectedItem);
-                    }
-                }
-                selectedObjectIndex = -1;
-            }
-
-            visibleListings = visible;
-            resultsCount.innerHTML = `
-                Показано <strong>${visibleListings.length}</strong> з <strong>${filteredListings.length}</strong> об'єктів
-            `;
-        }
-
-        function renderPage(page) {
-            if (!visibleListings.length) {
-                listContainer.innerHTML = `
-                    <div class="no-results">
-                        <i class="fas fa-search"></i>
-                        <p>У цій області немає об'єктів, що відповідають фільтрам.<br>Перемістіть карту або змініть фільтри.</p>
-                    </div>
-                `;
-                paginationWrap.innerHTML = '';
-                return;
-            }
-
-            totalPages = Math.ceil(visibleListings.length / ITEMS_PER_PAGE);
-            if (page < 1) page = 1;
-            if (page > totalPages) page = totalPages;
-            currentPage = page;
-
-            const start = (page - 1) * ITEMS_PER_PAGE;
-            const end = Math.min(start + ITEMS_PER_PAGE, visibleListings.length);
-            const pageItems = visibleListings.slice(start, end);
-
+        // Рендеринг списку (поточні items)
+        function renderPageItems(items) {
             listContainer.innerHTML = '';
             const progressBar = document.createElement('div');
             progressBar.className = 'progress-bar';
-            progressBar.innerHTML = '<div class="fill" id="progressFill"></div>';
+            progressBar.innerHTML = '<div class="fill" id="progressFill" style="width:100%;"></div>';
             listContainer.appendChild(progressBar);
 
             const fragment = document.createDocumentFragment();
-            pageItems.forEach(item => {
-                const originalIndex = filteredListings.indexOf(item);
-                const url = item.url || '#';
+            items.forEach(item => {
+                // item — це об'єкт з полями t, c, a, p, g, i, x, y, u
                 const card = document.createElement('a');
-                card.href = escapeHtml(url);
+                card.href = escapeHtml(item.u || '#');
                 card.className = 'listing-card-link';
-                card.dataset.index = originalIndex;
+                card.dataset.index = item.u; // використовуємо url як id
                 card.innerHTML = `
-                    <div class="listing-card" data-index="${originalIndex}">
+                    <div class="listing-card" data-id="${escapeHtml(item.u)}">
                         <div class="image">
-                            <img src="${escapeHtml(item.image) || 'https://placehold.co/600x400/eee/ccc?text=Немає+фото'}" alt="${escapeHtml(item.title)}" loading="lazy" width="100" height="100">
+                            <img src="${escapeHtml(item.i) || 'https://placehold.co/600x400/eee/ccc?text=Немає+фото'}" alt="${escapeHtml(item.t)}" loading="lazy" width="100" height="100">
                         </div>
                         <div class="info">
                             <div>
-                                <div class="title">${escapeHtml(item.title)}</div>
-                                <div class="location"><i class="fas fa-map-marker-alt" style="font-size:11px;"></i> ${escapeHtml(item.city || '')}${item.address ? ', ' + escapeHtml(item.address) : ''}</div>
+                                <div class="title">${escapeHtml(item.t)}</div>
+                                <div class="location"><i class="fas fa-map-marker-alt" style="font-size:11px;"></i> ${escapeHtml(item.c || '')}${item.a ? ', ' + escapeHtml(item.a) : ''}</div>
                             </div>
                             <div>
-                                <div class="price">₴${item.price} <span>/ ніч</span></div>
-                                <div class="guests"><i class="fas fa-users"></i> до ${item.guests} гостей</div>
+                                <div class="price">₴${item.p} <span>/ ніч</span></div>
+                                <div class="guests"><i class="fas fa-users"></i> до ${item.g} гостей</div>
                             </div>
                         </div>
                     </div>
@@ -895,40 +592,34 @@
                 fragment.appendChild(card);
             });
             listContainer.appendChild(fragment);
-
-            applyHighlightToCurrentList();
-            renderPagination();
+            // Прокручуємо вгору
+            listContainer.scrollTop = 0;
         }
 
-        // === ПАГІНАЦІЯ (макс. 3 номери, стрілки < >) ===
-        function renderPagination() {
-            if (visibleListings.length === 0) {
+        // Пагінація
+        function renderPagination(total, currentPage, perPage) {
+            if (total === 0) {
                 paginationWrap.innerHTML = '';
                 return;
             }
-
-            totalPages = Math.ceil(visibleListings.length / ITEMS_PER_PAGE);
-            const current = currentPage;
-
+            const totalPages = Math.ceil(total / perPage);
             let html = '';
 
-            // Стрілка "Назад"
-            html += `<button class="page-btn arrow" data-page="${current - 1}" ${current <= 1 ? 'disabled' : ''}>&lt;</button>`;
+            // Назад
+            html += `<button class="page-btn arrow" data-page="${currentPage - 1}" ${currentPage <= 1 ? 'disabled' : ''}>&lt;</button>`;
 
-            // Номери сторінок (максимум 3)
             let pages = [];
             if (totalPages <= 3) {
                 for (let i = 1; i <= totalPages; i++) pages.push(i);
             } else {
-                if (current <= 2) {
+                if (currentPage <= 2) {
                     pages = [1, 2, 3];
                     if (totalPages > 3) pages.push('...');
-                } else if (current >= totalPages - 1) {
+                } else if (currentPage >= totalPages - 1) {
                     pages = ['...', totalPages - 2, totalPages - 1, totalPages];
                 } else {
-                    pages = ['...', current - 1, current, current + 1, '...'];
+                    pages = ['...', currentPage - 1, currentPage, currentPage + 1, '...'];
                 }
-                // Видаляємо дублюючі трикрапки
                 if (pages[0] === '...' && pages[1] === '...') pages.shift();
                 if (pages[pages.length - 1] === '...' && pages[pages.length - 2] === '...') pages.pop();
             }
@@ -937,76 +628,37 @@
                 if (p === '...') {
                     html += `<span class="page-btn dots">…</span>`;
                 } else {
-                    html += `<button class="page-btn ${p === current ? 'active' : ''}" data-page="${p}">${p}</button>`;
+                    html += `<button class="page-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
                 }
             });
 
-            // Стрілка "Вперед"
-            html += `<button class="page-btn arrow" data-page="${current + 1}" ${current >= totalPages ? 'disabled' : ''}>&gt;</button>`;
-
-            // Інформація про сторінку
-            html += `<span class="page-info">${current} / ${totalPages}</span>`;
+            // Вперед
+            html += `<button class="page-btn arrow" data-page="${currentPage + 1}" ${currentPage >= totalPages ? 'disabled' : ''}>&gt;</button>`;
+            html += `<span class="page-info">${currentPage} / ${totalPages}</span>`;
 
             paginationWrap.innerHTML = html;
 
+            // Обробники кліків
             paginationWrap.querySelectorAll('.page-btn:not(.dots)').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const page = parseInt(this.dataset.page);
                     if (page && page !== currentPage && page >= 1 && page <= totalPages) {
                         currentPage = page;
-                        renderPage(currentPage);
+                        // Завантажуємо нову сторінку з тими ж фільтрами
+                        const guestsVal = parseInt(guestsFilter.value) || 0;
+                        const minPriceVal = parseFloat(priceMin.value) || 0;
+                        const maxPriceVal = priceMax.value ? parseFloat(priceMax.value) : Infinity;
+                        const sortVal = sortSelect.value || 'default';
+                        loadListingsForCurrentBounds(guestsVal, minPriceVal, maxPriceVal, sortVal);
                         listContainer.scrollTop = 0;
                     }
                 });
             });
         }
 
-        function applyHighlightToCurrentList() {
-            if (highlightedIndex === -1 && pendingHighlightIndex === -1) return;
-            const targetIndex = pendingHighlightIndex !== -1 ? pendingHighlightIndex : highlightedIndex;
-            if (targetIndex === -1) return;
-
-            document.querySelectorAll('.listing-card.highlighted').forEach(el => el.classList.remove('highlighted'));
-
-            const card = document.querySelector(`.listing-card[data-index="${targetIndex}"]`);
-            if (card) {
-                card.classList.add('highlighted');
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                highlightedIndex = targetIndex;
-                if (pendingHighlightIndex !== -1) pendingHighlightIndex = -1;
-            } else {
-                const item = filteredListings[targetIndex];
-                if (item) {
-                    const pos = visibleListings.indexOf(item);
-                    if (pos !== -1) {
-                        const page = Math.floor(pos / ITEMS_PER_PAGE) + 1;
-                        if (page !== currentPage) {
-                            currentPage = page;
-                            renderPage(currentPage);
-                            setTimeout(() => {
-                                const newCard = document.querySelector(`.listing-card[data-index="${targetIndex}"]`);
-                                if (newCard) {
-                                    newCard.classList.add('highlighted');
-                                    newCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                    highlightedIndex = targetIndex;
-                                    if (pendingHighlightIndex !== -1) pendingHighlightIndex = -1;
-                                }
-                            }, 50);
-                        }
-                    }
-                }
-            }
-        }
-
-        function highlightCard(index) {
-            if (highlightedIndex !== -1 && highlightedIndex !== index) {
-                const prev = document.querySelector(`.listing-card[data-index="${highlightedIndex}"]`);
-                if (prev) prev.classList.remove('highlighted');
-            }
-            highlightedIndex = index;
-            applyHighlightToCurrentList();
-        }
-
+        // ============================================================
+        //  КАРТА ТА КЛАСТЕРИ
+        // ============================================================
         function initMap() {
             map = L.map('map', {
                 center: SPAIN_CENTER,
@@ -1021,12 +673,37 @@
                 maxZoom: 19,
                 subdomains: 'abc'
             }).addTo(map);
+
+            // При русі карти — оновлюємо дані
+            map.on('moveend', function() {
+                clearTimeout(listUpdateTimeout);
+                listUpdateTimeout = setTimeout(() => {
+                    // Завантажуємо дані для нових меж
+                    const guestsVal = parseInt(guestsFilter.value) || 0;
+                    const minPriceVal = parseFloat(priceMin.value) || 0;
+                    const maxPriceVal = priceMax.value ? parseFloat(priceMax.value) : Infinity;
+                    const sortVal = sortSelect.value || 'default';
+                    currentPage = 1; // скидаємо на першу сторінку
+                    loadListingsForCurrentBounds(guestsVal, minPriceVal, maxPriceVal, sortVal);
+                }, 300);
+            });
+
+            map.on('zoomend', function() {
+                // Перебудовуємо кластери при зміні масштабу
+                if (allMarkers.length > 0) {
+                    buildClusters(allMarkers);
+                }
+            });
         }
 
-        function buildClusters() {
+        function buildClusters(markers) {
             if (clusterGroup) {
                 map.removeLayer(clusterGroup);
                 clusterGroup = null;
+            }
+
+            if (!markers || markers.length === 0) {
+                return;
             }
 
             clusterGroup = L.markerClusterGroup({
@@ -1034,10 +711,10 @@
                 disableClusteringAtZoom: 17,
                 spiderfyOnMaxZoom: false,
                 iconCreateFunction: function(cluster) {
-                    const markers = cluster.getAllChildMarkers();
-                    const count = markers.length;
+                    const childMarkers = cluster.getAllChildMarkers();
+                    const count = childMarkers.length;
                     let minPrice = Infinity;
-                    markers.forEach(m => {
+                    childMarkers.forEach(m => {
                         const data = m.options.listingData;
                         if (data && data.price < minPrice) {
                             minPrice = data.price;
@@ -1074,13 +751,11 @@
                 }
             });
 
-            const currentZoom = map.getZoom();
-            const showPrice = currentZoom >= 15;
+            const showPrice = map.getZoom() >= 15;
 
-            const markers = [];
-            filteredListings.forEach((item, index) => {
-                const lat = parseFloat(item.lat);
-                const lng = parseFloat(item.lng);
+            markers.forEach(markerData => {
+                const lat = markerData.lat;
+                const lng = markerData.lng;
                 if (isNaN(lat) || isNaN(lng)) return;
 
                 let iconHtml;
@@ -1088,7 +763,7 @@
                 let popupAnchor;
 
                 if (showPrice) {
-                    iconHtml = `<div class="price-marker">₴${item.price}</div>`;
+                    iconHtml = `<div class="price-marker">₴${markerData.price}</div>`;
                     iconSize = [null, null];
                     popupAnchor = [0, -10];
                 } else {
@@ -1106,45 +781,41 @@
 
                 const popupContent = `
                     <div class="custom-popup">
-                        <div class="popup-title">${escapeHtml(item.title)}</div>
-                        <div class="popup-location">${escapeHtml(item.city || '')}${item.address ? ', ' + escapeHtml(item.address) : ''}</div>
-                        <div class="popup-price">₴${item.price} / ніч</div>
+                        <div class="popup-title">${escapeHtml(markerData.title)}</div>
+                        <div class="popup-price">₴${markerData.price} / ніч</div>
                         <div style="margin-top:6px;">
-                            <i class="fas fa-users"></i> до ${item.guests} гостей
+                            <i class="fas fa-users"></i> до ${markerData.guests} гостей
                         </div>
-                        <a href="${escapeHtml(item.url || '#')}" class="popup-link" target="_blank">Детальніше →</a>
+                        <a href="${escapeHtml(markerData.id)}" class="popup-link" target="_blank">Детальніше →</a>
                     </div>
                 `;
 
-                const marker = L.marker([lat, lng], { icon: icon, listingData: item })
+                const marker = L.marker([lat, lng], { icon: icon, listingData: markerData })
                     .bindPopup(popupContent);
 
                 marker.on('click', function() {
-                    const idx = filteredListings.indexOf(item);
-                    if (idx !== -1) {
-                        selectedObjectIndex = idx;
-                        pendingHighlightIndex = idx;
-                        const pos = visibleListings.indexOf(item);
-                        if (pos !== -1) {
-                            const page = Math.floor(pos / ITEMS_PER_PAGE) + 1;
-                            if (page !== currentPage) {
-                                currentPage = page;
-                                renderPage(currentPage);
-                            }
-                        }
-                        highlightCard(idx);
+                    // При кліку на маркер шукаємо цей об'єкт у списку і підсвічуємо
+                    const id = markerData.id;
+                    const card = document.querySelector(`.listing-card[data-id="${escapeHtml(id)}"]`);
+                    if (card) {
+                        // Знімаємо попередні виділення
+                        document.querySelectorAll('.listing-card.highlighted').forEach(el => el.classList.remove('highlighted'));
+                        card.classList.add('highlighted');
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
+                    // Наближаємо карту
                     map.setView([lat, lng], Math.max(map.getZoom(), 15));
                 });
 
-                markers.push(marker);
-                markerMap[index] = marker;
+                clusterGroup.addLayer(marker);
             });
 
-            clusterGroup.addLayers(markers);
             map.addLayer(clusterGroup);
         }
 
+        // ============================================================
+        //  ДОПОМІЖНІ ФУНКЦІЇ
+        // ============================================================
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -1152,12 +823,58 @@
             return div.innerHTML;
         }
 
-        loadData();
+        // ============================================================
+        //  ОБРОБНИКИ ПОДІЙ
+        // ============================================================
+        applyBtn.addEventListener('click', function() {
+            currentPage = 1;
+            applyFiltersAndSort();
+        });
+
+        resetBtn.addEventListener('click', function() {
+            sortSelect.value = 'default';
+            guestsFilter.value = '0';
+            priceMin.value = '';
+            priceMax.value = '';
+            currentPage = 1;
+            applyFiltersAndSort();
+        });
+
+        sortSelect.addEventListener('change', function() {
+            currentPage = 1;
+            applyFiltersAndSort();
+        });
+
+        guestsFilter.addEventListener('change', function() {
+            currentPage = 1;
+            applyFiltersAndSort();
+        });
+
+        priceMin.addEventListener('keydown', function(e) { if (e.key === 'Enter') applyBtn.click(); });
+        priceMax.addEventListener('keydown', function(e) { if (e.key === 'Enter') applyBtn.click(); });
+
+        // ============================================================
+        //  ЗАПУСК
+        // ============================================================
+        function init() {
+            initMap();
+            // Спочатку завантажуємо дані для початкових меж
+            setTimeout(() => {
+                const guestsVal = parseInt(guestsFilter.value) || 0;
+                const minPriceVal = parseFloat(priceMin.value) || 0;
+                const maxPriceVal = priceMax.value ? parseFloat(priceMax.value) : Infinity;
+                const sortVal = sortSelect.value || 'default';
+                loadListingsForCurrentBounds(guestsVal, minPriceVal, maxPriceVal, sortVal);
+            }, 300);
+        }
+
+        init();
+
     })();
 </script>
 
 <!-- ============================================================
-     ЧАТ
+     ЧАТ (без змін)
      ============================================================ -->
 <script>
     (function() {
