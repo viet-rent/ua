@@ -468,7 +468,7 @@
                     limitMessage = `
                         <div class="info-note">
                             <i class="fas fa-info-circle"></i>
-                            <span>Сума бронювання перевищує 99 000 ₽. Для підтвердження достатньо внести <strong>${paymentAmount.toLocaleString()} ₽</strong>. Решту ви сплатите після прибуття.</span>
+                            <span>Сума бронювання перевищує 99 000 ₴. Для підтвердження достатньо внести <strong>${paymentAmount.toLocaleString()} ₴</strong>. Решту ви сплатите після прибуття.</span>
                         </div>
                     `;
                 }
@@ -501,11 +501,11 @@
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Ціна за ніч</span>
-                        <span class="detail-value">₽${data.pricePerNight}</span>
+                        <span class="detail-value">₴${data.pricePerNight}</span>
                     </div>
                     <div class="detail-row" style="font-size:20px; padding-top:12px;">
                         <span class="detail-label">Разом до оплати</span>
-                        <span class="detail-value">₽${total}</span>
+                        <span class="detail-value">₴${total}</span>
                     </div>
                     ${limitMessage}
                 `;

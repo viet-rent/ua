@@ -884,7 +884,7 @@
                                 <div class="location"><i class="fas fa-map-marker-alt" style="font-size:11px;"></i> ${escapeHtml(item.city || '')}${item.address ? ', ' + escapeHtml(item.address) : ''}</div>
                             </div>
                             <div>
-                                <div class="price">₽${item.price} <span>/ ніч</span></div>
+                                <div class="price">₴${item.price} <span>/ ніч</span></div>
                                 <div class="guests"><i class="fas fa-users"></i> до ${item.guests} гостей</div>
                             </div>
                         </div>
@@ -1050,7 +1050,7 @@
 
                     let html = `<div class="marker-cluster ${sizeClass}">`;
                     if (showPrice && minPrice !== Infinity) {
-                        html += `<span>${count}</span><br><span class="cluster-price">від ₽${minPrice}</span>`;
+                        html += `<span>${count}</span><br><span class="cluster-price">від ₴${minPrice}</span>`;
                     } else {
                         html += `<span>${count}</span>`;
                     }
@@ -1086,7 +1086,7 @@
                 let popupAnchor;
 
                 if (showPrice) {
-                    iconHtml = `<div class="price-marker">₽${item.price}</div>`;
+                    iconHtml = `<div class="price-marker">₴${item.price}</div>`;
                     iconSize = [null, null];
                     popupAnchor = [0, -10];
                 } else {
@@ -1106,7 +1106,7 @@
                     <div class="custom-popup">
                         <div class="popup-title">${escapeHtml(item.title)}</div>
                         <div class="popup-location">${escapeHtml(item.city || '')}${item.address ? ', ' + escapeHtml(item.address) : ''}</div>
-                        <div class="popup-price">₽${item.price} / ніч</div>
+                        <div class="popup-price">₴${item.price} / ніч</div>
                         <div style="margin-top:6px;">
                             <i class="fas fa-users"></i> до ${item.guests} гостей
                         </div>
