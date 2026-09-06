@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VietRent — оренда житла у В'єтнамі</title>
+    <title>SpainRent — оренда житла в Іспанії</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
@@ -303,7 +303,6 @@
                 margin-bottom: 0;
                 flex-shrink: 0;
             }
-            /* Фільтри справа, список зліва */
             .filters-panel {
                 order: 2;
                 flex: 0 0 160px;
@@ -510,9 +509,9 @@
 <body>
 
 <header class="header">
-    <a href="/" class="logo">🏝️🏠VietRent</a>
+    <a href="/" class="logo">🇪🇸🏠SpainRent</a>
     <div class="header-controls">
-        <span class="city"><i class="fas fa-map-marker-alt"></i>Фукуок, В'єтнам</span>
+        <span class="city"><i class="fas fa-map-marker-alt"></i>Барселона, Іспанія</span>
     </div>
 </header>
 
@@ -577,9 +576,9 @@
 
 <script>
     (function() {
-        // === КОНФІГУРАЦІЯ ===
-        const PATTAYA_CENTER = [10.2333, 103.9667];
-        const DEFAULT_ZOOM = 11;
+        // === КОНФІГУРАЦІЯ (Іспанія, Барселона) ===
+        const BARCELONA_CENTER = [41.3851, 2.1734];
+        const DEFAULT_ZOOM = 12;
         const ITEMS_PER_PAGE = 20;
 
         // === ГЛОБАЛЬНІ ЗМІННІ ===
@@ -1007,7 +1006,7 @@
 
         function initMap() {
             map = L.map('map', {
-                center: PATTAYA_CENTER,
+                center: BARCELONA_CENTER,
                 zoom: DEFAULT_ZOOM,
                 zoomControl: true,
                 fadeAnimation: true,
