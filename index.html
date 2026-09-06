@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     <style>
-        /* === ОСНОВНІ СТИЛІ === */
+        /* === ОСНОВНІ СТИЛІ (без змін) === */
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #222; height: 100vh; overflow: hidden; }
         a { text-decoration: none; color: inherit; }
@@ -442,7 +442,9 @@
         //  ОСНОВНА ФУНКЦІЯ ЗАПИТУ ДО API
         // ============================================================
         async function fetchData(params) {
+            // params: { bounds, minPrice, maxPrice, guests, sort, page, perPage }
             const url = new URL(API_URL);
+            // Передаємо параметри як query string
             if (params.bounds) {
                 url.searchParams.set('bounds', JSON.stringify(params.bounds));
             }
@@ -470,7 +472,7 @@
                 if (!response.ok) throw new Error('HTTP ' + response.status);
                 const data = await response.json();
                 if (data.error) throw new Error(data.error);
-                return data;
+                return data; // { total, items, markers }
             } catch (err) {
                 console.error('Помилка завантаження даних:', err);
                 throw err;
@@ -481,13 +483,17 @@
         //  ФУНКЦІЇ ДЛЯ РОБОТИ З ДАНИМИ ТА ВІДОБРАЖЕННЯМ
         // ============================================================
         function applyFiltersAndSort() {
+            // Отримуємо значення з фільтрів
             const guestsVal = parseInt(guestsFilter.value) || 0;
             const minPriceVal = parseFloat(priceMin.value) || 0;
             const maxPriceVal = priceMax.value ? parseFloat(priceMax.value) : Infinity;
             const sortVal = sortSelect.value || 'default';
+
+            // Викликаємо завантаження даних з поточними параметрами карти
             loadListingsForCurrentBounds(guestsVal, minPriceVal, maxPriceVal, sortVal);
         }
 
+        // Завантаження даних для поточних меж карти з фільтрами
         function loadListingsForCurrentBounds(guests, minPrice, maxPrice, sort) {
             if (!map) return;
             const bounds = map.getBounds();
@@ -496,6 +502,7 @@
                 [bounds.getNorth(), bounds.getEast()]
             ];
 
+            // Показуємо лоадер
             listWrapper.classList.add('loading');
 
             fetchData({
@@ -512,7 +519,9 @@
                 visibleListings = data.items || [];
                 allMarkers = data.markers || [];
 
+                // Оновлюємо результати
                 resultsCount.innerHTML = `Знайдено <strong>${totalItems}</strong> об'єктів`;
+                // Якщо список порожній
                 if (visibleListings.length === 0) {
                     listContainer.innerHTML = `
                         <div class="no-results">
@@ -524,8 +533,11 @@
                     renderPageItems(visibleListings);
                 }
                 renderPagination(totalItems, currentPage, ITEMS_PER_PAGE);
+
+                // Будуємо кластери на карті
                 buildClusters(allMarkers);
 
+                // Скидаємо виділення
                 highlightedIndex = -1;
                 pendingHighlightIndex = -1;
                 selectedObjectIndex = -1;
@@ -545,6 +557,7 @@
             });
         }
 
+        // Рендеринг списку (поточні items)
         function renderPageItems(items) {
             listContainer.innerHTML = '';
             const progressBar = document.createElement('div');
@@ -554,10 +567,11 @@
 
             const fragment = document.createDocumentFragment();
             items.forEach(item => {
+                // item — це об'єкт з полями t, c, a, p, g, i, x, y, u
                 const card = document.createElement('a');
                 card.href = escapeHtml(item.u || '#');
                 card.className = 'listing-card-link';
-                card.dataset.index = item.u;
+                card.dataset.index = item.u; // використовуємо url як id
                 card.innerHTML = `
                     <div class="listing-card" data-id="${escapeHtml(item.u)}">
                         <div class="image">
@@ -578,9 +592,11 @@
                 fragment.appendChild(card);
             });
             listContainer.appendChild(fragment);
+            // Прокручуємо вгору
             listContainer.scrollTop = 0;
         }
 
+        // Пагінація
         function renderPagination(total, currentPage, perPage) {
             if (total === 0) {
                 paginationWrap.innerHTML = '';
@@ -589,6 +605,7 @@
             const totalPages = Math.ceil(total / perPage);
             let html = '';
 
+            // Назад
             html += `<button class="page-btn arrow" data-page="${currentPage - 1}" ${currentPage <= 1 ? 'disabled' : ''}>&lt;</button>`;
 
             let pages = [];
@@ -615,16 +632,19 @@
                 }
             });
 
+            // Вперед
             html += `<button class="page-btn arrow" data-page="${currentPage + 1}" ${currentPage >= totalPages ? 'disabled' : ''}>&gt;</button>`;
             html += `<span class="page-info">${currentPage} / ${totalPages}</span>`;
 
             paginationWrap.innerHTML = html;
 
+            // Обробники кліків
             paginationWrap.querySelectorAll('.page-btn:not(.dots)').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const page = parseInt(this.dataset.page);
                     if (page && page !== currentPage && page >= 1 && page <= totalPages) {
                         currentPage = page;
+                        // Завантажуємо нову сторінку з тими ж фільтрами
                         const guestsVal = parseInt(guestsFilter.value) || 0;
                         const minPriceVal = parseFloat(priceMin.value) || 0;
                         const maxPriceVal = priceMax.value ? parseFloat(priceMax.value) : Infinity;
@@ -654,19 +674,22 @@
                 subdomains: 'abc'
             }).addTo(map);
 
+            // При русі карти — оновлюємо дані
             map.on('moveend', function() {
                 clearTimeout(listUpdateTimeout);
                 listUpdateTimeout = setTimeout(() => {
+                    // Завантажуємо дані для нових меж
                     const guestsVal = parseInt(guestsFilter.value) || 0;
                     const minPriceVal = parseFloat(priceMin.value) || 0;
                     const maxPriceVal = priceMax.value ? parseFloat(priceMax.value) : Infinity;
                     const sortVal = sortSelect.value || 'default';
-                    currentPage = 1;
+                    currentPage = 1; // скидаємо на першу сторінку
                     loadListingsForCurrentBounds(guestsVal, minPriceVal, maxPriceVal, sortVal);
                 }, 300);
             });
 
             map.on('zoomend', function() {
+                // Перебудовуємо кластери при зміні масштабу
                 if (allMarkers.length > 0) {
                     buildClusters(allMarkers);
                 }
@@ -771,13 +794,16 @@
                     .bindPopup(popupContent);
 
                 marker.on('click', function() {
+                    // При кліку на маркер шукаємо цей об'єкт у списку і підсвічуємо
                     const id = markerData.id;
                     const card = document.querySelector(`.listing-card[data-id="${escapeHtml(id)}"]`);
                     if (card) {
+                        // Знімаємо попередні виділення
                         document.querySelectorAll('.listing-card.highlighted').forEach(el => el.classList.remove('highlighted'));
                         card.classList.add('highlighted');
                         card.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
+                    // Наближаємо карту
                     map.setView([lat, lng], Math.max(map.getZoom(), 15));
                 });
 
@@ -832,6 +858,7 @@
         // ============================================================
         function init() {
             initMap();
+            // Спочатку завантажуємо дані для початкових меж
             setTimeout(() => {
                 const guestsVal = parseInt(guestsFilter.value) || 0;
                 const minPriceVal = parseFloat(priceMin.value) || 0;
